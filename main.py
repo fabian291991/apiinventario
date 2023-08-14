@@ -95,7 +95,7 @@ def crearAlmacenista():
 def getAlmacenista(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/almacenistas/' + id
-    response = requests.get(url, headers=headers, json=data)
+    response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
 
@@ -105,7 +105,7 @@ def modificarAlmacenista(id):
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/almacenistas/'+ id
-    response = requests.pust(url, headers=headers, json=data)
+    response = requests.put(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
 
@@ -132,7 +132,7 @@ def getproductos():
 def crearProductos():
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + 'productos'
+    url = dataConfig["url-backend-academic"] + '/productos'
     response = requests.post(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
@@ -141,7 +141,7 @@ def crearProductos():
 def getProducto(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/productos/' + id
-    response = requests.get(url, headers=headers, json=data)
+    response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
 
@@ -151,7 +151,7 @@ def modificarProducto(id):
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/productos/'+ id
-    response = requests.pust(url, headers=headers, json=data)
+    response = requests.put(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
 
@@ -179,7 +179,7 @@ def getProveedores():
 def crearProveedor():
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + 'proveedores'
+    url = dataConfig["url-backend-academic"] + '/proveedores'
     response = requests.post(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
@@ -188,7 +188,7 @@ def crearProveedor():
 def getProveedor(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/proveedores/' + id
-    response = requests.get(url, headers=headers, json=data)
+    response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
 
@@ -198,7 +198,7 @@ def modificarProveedor(id):
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/proveedores/'+ id
-    response = requests.pust(url, headers=headers, json=data)
+    response = requests.put(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
 
@@ -221,11 +221,12 @@ def getInventarios():
     json = response.json()
     return jsonify(json)
 
-@app.route("/inventarios", methods=['POST'])
-def crearInventario():
+@app.route("/inventarios/almacenista/<string:id_almacenista>", methods=['POST'])
+def crearInventario(id_almacenista):
+    print(id_almacenista)
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + 'inventarios'
+    url = dataConfig["url-backend-academic"] + '/inventarios/almacenista/'+id_almacenista
     response = requests.post(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
@@ -233,8 +234,8 @@ def crearInventario():
 @app.route("/inventarios/<string:id>", methods=['GET'])
 def getInventario(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/inventarios/' + id
-    response = requests.get(url, headers=headers, json=data)
+    url = dataConfig["url-backend-academic"] + '/inventario/' + id
+    response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
 
@@ -244,7 +245,7 @@ def modificarInventario(id):
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/inventarios/'+ id
-    response = requests.pust(url, headers=headers, json=data)
+    response = requests.put(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
 
@@ -270,16 +271,16 @@ def getInventariosProductos():
 def crearInventarioProductos():
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + 'inventarioproductos'
+    url = dataConfig["url-backend-academic"] + '/inventarioproductos'
     response = requests.post(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
 
-@app.route("/inventarioproductos/<string:id>", methods=['GET'])
+@app.route("/inventarioproductos/inventario/<string:id>", methods=['GET'])
 def getInventarioProductos(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/inventarioproductos/' + id
-    response = requests.get(url, headers=headers, json=data)
+    url = dataConfig["url-backend-academic"] + '/inventarioproductos/inventario/' + id
+    response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
 
